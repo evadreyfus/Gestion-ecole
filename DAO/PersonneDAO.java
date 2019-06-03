@@ -4,43 +4,43 @@
  * and open the template in the editor.
  */
 package DAO;
-import modele.Eleve;
+import modele.Personne;
 import java.sql.*;
 /**
  *
  * @author evadr
  */
 
-public class EleveDAO extends DAO<Eleve> {
-  public EleveDAO(Connection conn) {
+public class PersonneDAO extends DAO<Personne> {
+  public PersonneDAO(Connection conn) {
     super(conn);
   }
 
   @Override
-  public boolean create(Eleve obj) {
+  public boolean create(Personne obj) {
     return false;
   }
 
   @Override
-  public boolean delete(Eleve obj) {
+  public boolean delete(Personne obj) {
     return false;
   }
   
   @Override
-  public boolean update(Eleve obj) {
+  public boolean update(Personne obj) {
     return false;
   }
   
-
-  public Eleve find(Integer id) {
-    Eleve eleve = new Eleve();      
+@Override
+  public Personne find(Integer id) {
+    Personne personne = new Personne();      
       
     try {
       ResultSet result = this.connect.createStatement(
         ResultSet.TYPE_SCROLL_INSENSITIVE,
-        ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM eleve WHERE pk_id = " + id);
+        ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM personne WHERE pk_id = " + id);
       if(result.first())
-        eleve = new Eleve(
+        personne = new Personne(
           id,
           result.getString("nom"),
           result.getString("prenom"),
@@ -48,6 +48,7 @@ public class EleveDAO extends DAO<Eleve> {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return eleve;
+    return personne;
   }
-}
+} 
+  

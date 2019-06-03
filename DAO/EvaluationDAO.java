@@ -4,47 +4,51 @@
  * and open the template in the editor.
  */
 package DAO;
-import modele.Bulletin;
+import modele.Evaluation;
 import java.sql.*;
 /**
  *
  * @author evadr
  */
-public class BulletinDAO extends DAO<Bulletin> {
-  public BulletinDAO(Connection conn) {
+
+public class EvaluationDAO extends DAO<Evaluation> {
+  public EvaluationDAO(Connection conn) {
     super(conn);
   }
 
   @Override
-  public boolean create(Bulletin obj) {
+  public boolean create(Evaluation obj) {
     return false;
   }
 
   @Override
-  public boolean delete(Bulletin obj) {
+  public boolean delete(Evaluation obj) {
     return false;
   }
   
   @Override
-  public boolean update(Bulletin obj) {
+  public boolean update(Evaluation obj) {
     return false;
   }
-   public Bulletin find(Integer id) {
-    Bulletin bulletin = new Bulletin();      
+  
+@Override
+  public Evaluation find(Integer id) {
+    Evaluation evaluation = new Evaluation();      
       
     try {
       ResultSet result = this.connect.createStatement(
         ResultSet.TYPE_SCROLL_INSENSITIVE,
-        ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM bulletin WHERE pk_id = " + id);
+        ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM evaluation WHERE pk_id = " + id);
       if(result.first())
-        bulletin = new Bulletin(
+        evaluation = new Evaluation(
           id,
-          result.getInt("trimestre"),
-          result.getInt("inscription"),
+          result.getInt("detail bulletin"),
+          result.getDouble("note"),
           result.getString("appreciation"));         
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return bulletin;
+    return evaluation;
   }
-}
+} 
+  

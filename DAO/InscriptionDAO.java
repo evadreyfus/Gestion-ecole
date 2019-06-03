@@ -4,50 +4,50 @@
  * and open the template in the editor.
  */
 package DAO;
-import modele.Eleve;
+import modele.Inscription;
 import java.sql.*;
 /**
  *
  * @author evadr
  */
 
-public class EleveDAO extends DAO<Eleve> {
-  public EleveDAO(Connection conn) {
+public class InscriptionDAO extends DAO<Inscription> {
+  public InscriptionDAO(Connection conn) {
     super(conn);
   }
 
   @Override
-  public boolean create(Eleve obj) {
+  public boolean create(Inscription obj) {
     return false;
   }
 
   @Override
-  public boolean delete(Eleve obj) {
+  public boolean delete(Inscription obj) {
     return false;
   }
   
   @Override
-  public boolean update(Eleve obj) {
+  public boolean update(Inscription obj) {
     return false;
   }
   
-
-  public Eleve find(Integer id) {
-    Eleve eleve = new Eleve();      
+@Override
+  public Inscription find(Integer id) {
+    Inscription inscription = new Inscription();      
       
     try {
       ResultSet result = this.connect.createStatement(
         ResultSet.TYPE_SCROLL_INSENSITIVE,
-        ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM eleve WHERE pk_id = " + id);
+        ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM inscription WHERE pk_id = " + id);
       if(result.first())
-        eleve = new Eleve(
+        inscription = new Inscription(
           id,
-          result.getString("nom"),
-          result.getString("prenom"),
-          result.getInt("type"));         
+          result.getInt("classe"),
+          result.getInt("personne"));         
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return eleve;
+    return inscription;
   }
-}
+} 
+  
