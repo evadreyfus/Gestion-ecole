@@ -6,42 +6,69 @@
 package DAO;
 import modele.Trimestre;
 import java.sql.*;
+import controleur.Connexion;
 /**
  *
  * @author evadr
  */
 
 public class TrimestreDAO extends DAO<Trimestre> {
-  public TrimestreDAO(Connection conn) {
+  public TrimestreDAO(Connexion conn) {
     super(conn);
   }
 
   @Override
   public boolean create(Trimestre obj) {
+         try {
+        this.connect.getStmt().executeUpdate("INSERT INTO trimestre(numero,debut,fin,anneescolaire)"
+                + " VALUES (" + obj.getNumero()+ "," + obj.getDebut()+ "," + obj.getFin()+ "," + obj.getFk_AnneScolaire_id() + ")");
+    }catch(SQLException e){
+        e.printStackTrace();
+    }
     return false;
   }
 
   @Override
   public boolean delete(Trimestre obj) {
+      try{
+     
+        this.connect.getConn().createStatement().executeUpdate("DELETE FROM personne WHERE id = " + obj.getPk_id());
+      }catch(SQLException e){
+          e.printStackTrace();
+      }
     return false;
   }
   
   @Override
   public boolean update(Trimestre obj) {
+    try{
+    
+        this.connect.getStmt().executeUpdate("UPDATE trimestre"
+                + "SET"
+                + " numero = " + obj.getNumero()
+                + ", debut = " + obj.getDebut()
+                + ", fin = " + obj.getFin()
+                + ", anneescolaire = " + obj.getFk_AnneScolaire_id()
+                + " WHERE id = " +obj.getPk_id() + "");
+          
+    }catch(SQLException e){
+        e.printStackTrace();
+    }
     return false;
   }
   
-@Override
-  public Trimestre find(Integer id) {
+
+  public Trimestre find(Integer numero, Integer anneescolaire) {
     Trimestre trimestre = new Trimestre();      
       
     try {
-      ResultSet result = this.connect.createStatement(
-        ResultSet.TYPE_SCROLL_INSENSITIVE,
-        ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM trimestre WHERE pk_id = " + id);
+      ResultSet result = this.connect.getStmt().executeQuery("SELECT t.id,t.numero,t.debut,t.fin,t.anneescolaire "
+                + " FROM trimestre t"
+                + " INNER JOIN ON anneescolaire a ON anneescolaire.id = " + anneescolaire + " "
+                + " WHERE numero = " + numero);
       if(result.first())
         trimestre = new Trimestre(
-          id,
+          result.getInt("id"),
           result.getInt("numero"),
           result.getInt("debut"),
           result.getInt("fin"),
