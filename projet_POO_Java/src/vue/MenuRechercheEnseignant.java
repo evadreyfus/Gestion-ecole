@@ -12,16 +12,15 @@ import DAO.*;
 import controleur.Connexion;
 import java.sql.SQLException;
 import modele.*;
-
 /**
  *
  * @author evadr
  */
-public class MenuRechercheEleve extends JFrame {
+public class MenuRechercheEnseignant extends JFrame {
     
-    public MenuRechercheEleve()
+    public MenuRechercheEnseignant()
     {
-        this.setTitle("Gestion école - Recherche d'Etudiant");
+        this.setTitle("Gestion école - Recherche d'Enseignant");
                 this.setSize(600,400);
                 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 this.setLocationRelativeTo(null); 
@@ -29,13 +28,11 @@ public class MenuRechercheEleve extends JFrame {
         
 		JPanel panel = new JPanel();
                 
+		JButton b_rechercher = new JButton("Rechercher");
+                
                 JButton b_menu = new JButton ("MENU");
                 b_menu.setForeground(Color.BLUE);
                 b_menu.setFont(new java.awt.Font("Century",1,14));
-               
-                
-		JButton b_bulletin = new JButton("Bulletin");
-                JButton b_classe = new JButton("Classe");
                 
 		JLabel l_nom = new JLabel("Nom : ");
                 ZoneTexte nom = new ZoneTexte();
@@ -61,9 +58,7 @@ public class MenuRechercheEleve extends JFrame {
                 p2.add(l_prenom);
                 p2.add(prenom);
                 
-                p3.add(b_bulletin);
-                p3.add(b_classe);
-                
+                p3.add(b_rechercher);
                 p4.add(b_menu);
                 
                 panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
@@ -72,28 +67,21 @@ public class MenuRechercheEleve extends JFrame {
                 panel.add(p3);
                 panel.add(p4);
                 
+                
                 this.getContentPane().add(panel);
                 this.setVisible(true);
                 
-                  b_bulletin.addActionListener(new ActionListener(){
+                  b_rechercher.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent event){
                    
-                    PersonneDAO eleveDAO= new PersonneDAO();
-                    Personne eleve=eleveDAO.find(nom.getText(),prenom.getText(),1); 
-                    MenuBulletinEleve menuEleve = new MenuBulletinEleve(eleve);
+                    PersonneDAO enseignantDAO= new PersonneDAO();
+                    Personne enseignant=enseignantDAO.find(nom.getText(),prenom.getText(),2); 
+                    MenuEnseignant menuEnseignant = new MenuEnseignant(enseignant);
                     
                     }
                 });
                   
-                 b_classe.addActionListener(new ActionListener(){
-                     public void actionPerformed(ActionEvent event){
-                         PersonneDAO eleveDAO = new PersonneDAO();
-                         Personne eleve = eleveDAO.find(nom.getText(),prenom.getText(),1);
-                         MenuClasseEleve menuClasse = new MenuClasseEleve(eleve);
-                     }
-                 });
-                  
-                  b_menu.addActionListener(new ActionListener(){
+                 b_menu.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent event){                        
                         MenuChoix m = new MenuChoix();                       
                     }

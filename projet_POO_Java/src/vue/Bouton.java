@@ -11,5 +11,7 @@ import javax.swing.JButton;
  * @author xavier.barras
  */
 public class Bouton extends JButton {
-    
+    public Bouton(String libelle){
+        super(libelle);
+    }
 }

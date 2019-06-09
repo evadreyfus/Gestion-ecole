@@ -15,5 +15,6 @@ import java.awt.Dimension;
 public class Lab extends JLabel {
     public Lab(String text){
         super(text);
+
     }
 }
